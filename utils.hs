@@ -33,7 +33,8 @@ glob pat = do
     -- try to guess the directory name by ignoring everything after the first * and getting the dir name from the part before the *.
     let dir = dirName (fst (break (=='*') pat))
     contents <- getRecursiveContents dir
-    return $ filter (=~ pat) contents
+    -- get files that match that pattern and aren't invisible files or dirs
+    return $ filter (\x -> (x =~ pat) && (x !~ "/\\..*")) contents
 
 uppercase = map T.toUpper
 lowercase = map T.toLower
