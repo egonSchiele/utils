@@ -10,7 +10,15 @@ import System.FilePath ((</>))
 import qualified Data.List as L
 import Data.List.Split
 import qualified Data.Text as T
+import qualified Data.Char as C
 import Text.Regex
+import System.Random
+
+-- choose a random element from a list
+choice l gen = l !! (fst (randomR (0, (L.genericLength l)) gen :: (Int, StdGen)))
+
+-- count the number of time x shows up in l
+count l x = L.genericLength $ filter (==x) l
 
 -- convenience functions to translate Maybes to bools
 maybe_bool (Just _)= True
@@ -36,8 +44,8 @@ glob pat = do
     -- get files that match that pattern and aren't invisible files or dirs
     return $ filter (\x -> (x =~ pat) && (x !~ "/\\..*")) contents
 
-uppercase = map T.toUpper
-lowercase = map T.toLower
+uppercase = map C.toUpper
+lowercase = map C.toLower
 
 -- | Attempt to open a web browser on the given url, all platforms.
 openBrowser :: String -> IO ExitCode
@@ -76,3 +84,4 @@ main = do
     openBrowser "http://google.com"
     getRecursiveContents "."
 -}
+
