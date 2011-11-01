@@ -14,6 +14,23 @@ import qualified Data.Char as C
 import Text.Regex
 import System.Random
 
+-- given an array, returns an array that is just indices for that first array
+-- example: ["a", "b", "c"] -> [0, 1, 2]
+indices l = [0..((genericLength l)-1)]
+
+
+-- usage: shape 4 [0..15]
+-- returns a 2d array like:
+-- [[0, 1, 2, 3],
+--  [4, 5, 6, 7],
+--  [8, 9, 10, 11],
+--  [12, 13, 14, 15]]
+
+-- so...reshapes the 1d array to a 2d array. n is the width of the 2d array.
+
+shape n [] = []
+shape n xs = [take n xs] ++ (shape n (drop n xs))
+
 -- choose a random element from a list
 choice l gen = l !! (fst (randomR (0, (L.genericLength l)) gen :: (Int, StdGen)))
 
