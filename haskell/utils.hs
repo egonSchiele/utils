@@ -16,7 +16,7 @@ import System.Random
 
 -- given an array, returns an array that is just indices for that first array
 -- example: ["a", "b", "c"] -> [0, 1, 2]
-indices l = [0..((genericLength l)-1)]
+indices l = [0..((L.genericLength l)-1)]
 
 
 -- usage: shape 4 [0..15]
@@ -36,6 +36,9 @@ choice l gen = l !! (fst (randomR (0, (L.genericLength l)) gen :: (Int, StdGen))
 
 -- count the number of time x shows up in l
 count l x = L.genericLength $ filter (==x) l
+
+-- run count on every value in l
+counts l = map (\x -> (x, count l x)) (L.nub l)
 
 -- convenience functions to translate Maybes to bools
 maybe_bool (Just _)= True
@@ -101,4 +104,5 @@ main = do
     openBrowser "http://google.com"
     getRecursiveContents "."
 -}
+
 
