@@ -13,6 +13,7 @@ import qualified Data.Text as T
 import qualified Data.Char as C
 import Text.Regex
 import System.Random
+import qualified Data.Map as M
 
 -- given an array, returns an array that is just indices for that first array
 -- example: ["a", "b", "c"] -> [0, 1, 2]
@@ -104,5 +105,9 @@ main = do
     openBrowser "http://google.com"
     getRecursiveContents "."
 -}
+
+-- merge h2 into h1, combining values of duplicates keys using the function f
+merge :: Ord k => M.Map k a -> M.Map k a -> (a -> a -> a) -> M.Map k a
+merge h1 h2 f = foldl (\acc k -> M.insertWith f k (h2 M.! k) acc) h1 (M.keys h2)
 
 
