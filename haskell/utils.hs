@@ -14,6 +14,10 @@ import qualified Data.Char as C
 import Text.Regex
 import System.Random
 import qualified Data.Map as M
+import Network.HTTP
+
+-- download a page.
+openURL x = getResponseBody =<< simpleHTTP (getRequest x)
 
 -- given an array, returns an array that is just indices for that first array
 -- example: ["a", "b", "c"] -> [0, 1, 2]
