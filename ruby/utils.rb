@@ -18,3 +18,12 @@ class Array
   end
 end
 
+# like Dir.glob, except gets all files recursively and skips invisible and symlinked files automatically
+def self.files_in(directory)
+  raise "#{directory} is not a directory" unless File.directory?(directory)
+  Dir[File.join(directory, '**', '*')].sort.select do |path|
+    File.file?(path) && File.readable?(path) && !File.symlink?(path) &&
+        !path.start_with?('.') && !path.end_with?('~')
+  end
+end
+
